@@ -1,8 +1,12 @@
 package com.davollo;
 
+import com.davollo.aoc2024.Utils;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.davollo.aoc2024.Utils.DIRS;
 
 class Day10 {
     private static int rows, cols;
@@ -21,7 +25,7 @@ class Day10 {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 if (trailMap[row][col] == 0) {
-                    Set<TrailHead> heads = new HashSet<TrailHead>();
+                    Set<TrailHead> heads = new HashSet<>();
 
                     int rating= countTrails(trailMap, row, col, 1, heads);
 
@@ -35,14 +39,9 @@ class Day10 {
         System.out.printf("Trail score= %d", total);
     }
 
-    record direction(int r, int c){};
-    private static final direction DIRECTION_N = new direction(-1,0);
-    private static final direction DIRECTION_E = new direction(0,1);
-    private static final direction DIRECTION_S = new direction(1,0);
-    private static final direction DIRECTION_W = new direction(0,-1);
-    private static final direction[] DIRS ={DIRECTION_N, DIRECTION_E, DIRECTION_S, DIRECTION_W};
 
-    private static int countTrails(int[][] trailMap, int row, int col, int next, Set<Day10.TrailHead> heads) {
+
+    private static int countTrails(int[][] trailMap, int row, int col, int next, Set<TrailHead> heads) {
         //dir[][] dirs = { new dir(-1,0), new dir{ -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
         int rating= 0;
 
@@ -58,8 +57,8 @@ class Day10 {
 
             for (int dir = 0; dir < DIRS.length; dir++) {
 
-                int nextR= row + DIRS[dir].r;
-                int nextC= col + DIRS[dir].c;
+                int nextR= row + DIRS[dir].r();
+                int nextC= col + DIRS[dir].c();
 
                 if (nextR < 0 || nextR == trailMap.length || nextC < 0 || nextC == trailMap[0].length) {
                     continue;
